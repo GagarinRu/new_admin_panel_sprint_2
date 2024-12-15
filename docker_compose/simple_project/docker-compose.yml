@@ -2,8 +2,8 @@ version: '3'
 services:
   service:
     build: app
-    expose:
-      - "8000"
+    ports:
+      - 8000:8000
     env_file:
       - ./.env
     volumes:
@@ -20,7 +20,7 @@ services:
     depends_on:
       - service
     ports:
-      - "80:80"
+      - 80:80
 
   theatre-db:
     image: postgres:16
@@ -30,6 +30,15 @@ services:
     volumes:
       - pg_data:/var/lib/postgresql/data
       - ./database_dump.sql:/docker-entrypoint-initdb.d/init.sql
+
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    volumes:
+      - ./path/openapi.yaml:/swagger.yaml
+    env_file:
+        - .env
+    ports:
+        - 8080:8080
 
 volumes:
   pg_data:

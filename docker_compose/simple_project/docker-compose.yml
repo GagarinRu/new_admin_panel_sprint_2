@@ -21,6 +21,7 @@ services:
       - service
     ports:
       - 80:80
+      - 443:443 
 
   theatre-db:
     image: postgres:16
@@ -30,6 +31,8 @@ services:
     volumes:
       - pg_data:/var/lib/postgresql/data
       - ./database_dump.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+     - 5432:5432
 
   swagger-ui:
     image: swaggerapi/swagger-ui
